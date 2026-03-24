@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>龍神恋愛運命鑑定</title>
+
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@300;400;700&family=Cinzel+Decorative:wght@400;700&display=swap');
+
+:root {
+  --gold: #c9a84c;
+  --gold-light: #f0d080;
+  --crimson: #8b0000;
+  --crimson-bright: #c0392b;
+  --ink: #0a0a0f;
+  --ink-mid: #12121e;
+  --ink-soft: #1c1c2e;
+  --smoke: #2a2a3e;
+  --text-pale: #d4c4a8;
+  --text-muted: #7a6d5a;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Noto Serif JP', serif;
+  background: var(--ink);
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+  color: var(--text-pale);
+}
+
+/* ── 背景エフェクト ── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 40% at 20% 80%, rgba(139,0,0,0.18) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 50% at 80% 10%, rgba(201,168,76,0.10) 0%, transparent 60%),
+    radial-gradient(ellipse 80% 60% at 50% 50%, rgba(18,18,30,0.95) 0%, transparent 100%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ── 煙パーティクル ── */
+.smoke-wrap {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.smoke-wrap span {
+  position: absolute;
+  bottom: -60px;
+  border-radius: 50%;
+  opacity: 0;
+  animation: smokeRise linear infinite;
+  background: radial-gradient(circle, rgba(201,168,76,0.06) 0%, transparent 70%);
+}
+
+@keyframes smokeRise {
+  0% { transform: translateY(0) translateX(0) scale(0.5); opacity: 0; }
+  20% { opacity: 1; }
+  80% { opacity: 0.4; }
+  100% { transform: translateY(-110vh) translateX(40px) scale(2.5); opacity: 0; }
+}
+
+/* ── メインコンテナ ── */
+.container {
+  max-width: 540px;
+  margin: 0 auto;
+  padding: 20px 20px 60px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── ヘッダー ── */
+.header {
+  text-align: center;
+  padding: 50px 0 30px;
+  position: relative;
+}
+
+.dragon-top {
+  font-size: 72px;
+  line-height: 1;
+  margin-bottom: 10px;
+  filter: drop-shadow(0 0 20px rgba(201,168,76,0.6));
+  animation: dragonFloat 4s ease-in-out infinite;
+}
+
+@keyframes dragonFloat {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-8px) scale(1.03); }
+}
+
+.header h1 {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: clamp(13px, 3.5vw, 18px);
+  letter-spacing: 0.15em;
+  color: var(--gold);
+  text-shadow: 0 0 20px rgba(201,168,76,0.5), 0 0 50px rgba(201,168,76,0.2);
+  margin-bottom: 6px;
+}
+
+.header .ja-title {
+  font-size: clamp(20px, 5vw, 28px);
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 0 0 30px rgba(201,168,76,0.4);
+  letter-spacing: 0.08em;
+}
+
+.gold-line {
+  width: 180px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  margin: 18px auto;
+  position: relative;
+}
+
+.gold-line::before, .gold-line::after {
+  content: '◆';
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--gold);
+  font-size: 8px;
+}
+.gold-line::before { left: 20px; }
+.gold-line::after { right: 20px; }
+
+.subtitle {
+  font-size: 13px;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+}
+
+/* ── フォームカード ── */
+.card {
+  background: linear-gradient(145deg, var(--ink-mid), var(--ink-soft));
+  border: 1px solid rgba(201,168,76,0.2);
+  border-radius: 3px;
+  padding: 32px 28px;
+  position: relative;
+  margin-top: 10px;
+  box-shadow:
+    0 0 0 1px rgba(0,0,0,0.8),
+    0 20px 60px rgba(0,0,0,0.6),
+    inset 0 1px 0 rgba(201,168,76,0.1);
+}
+
+/* 角飾り */
+.card::before, .card::after,
+.card .corner-bl, .card .corner-br {
+  content: '';
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border-color: var(--gold);
+  border-style: solid;
+  opacity: 0.7;
+}
+.card::before { top: 6px; left: 6px; border-width: 1px 0 0 1px; }
+.card::after { top: 6px; right: 6px; border-width: 1px 1px 0 0; }
+.card .corner-bl { bottom: 6px; left: 6px; border-width: 0 0 1px 1px; }
+.card .corner-br { bottom: 6px; right: 6px; border-width: 0 1px 1px 0; }
+
+/* ── フォーム要素 ── */
+.field-group {
+  margin-bottom: 18px;
+}
+
+label {
+  display: block;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  color: var(--gold);
+  margin-bottom: 6px;
+  text-transform: uppercase;
+}
+
+input, select {
+  width: 100%;
+  padding: 13px 16px;
+  background: rgba(0,0,0,0.4);
+  border: 1px solid rgba(201,168,76,0.25);
+  border-radius: 2px;
+  color: var(--text-pale);
+  font-family: 'Noto Serif JP', serif;
+  font-size: 15px;
+  outline: none;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  -webkit-appearance: none;
+}
+
+input::placeholder {
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+input:focus, select:focus {
+  border-color: rgba(201,168,76,0.6);
+  box-shadow: 0 0 0 2px rgba(201,168,76,0.08), 0 0 15px rgba(201,168,76,0.1);
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(0.7) sepia(1) hue-rotate(10deg);
+  opacity: 0.6;
+}
+
+select option {
+  background: var(--ink-soft);
+  color: var(--text-pale);
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 22px 0;
+  color: var(--text-muted);
+  font-size: 11px;
+  letter-spacing: 0.15em;
+}
+
+.divider::before, .divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(201,168,76,0.25), transparent);
+}
+
+/* ── ボタン ── */
+.btn-divine {
+  width: 100%;
+  padding: 18px;
+  background: linear-gradient(135deg, var(--crimson) 0%, #5c0011 50%, var(--crimson) 100%);
+  background-size: 200% 100%;
+  color: var(--gold-light);
+  border: 1px solid rgba(201,168,76,0.4);
+  border-radius: 2px;
+  font-family: 'Noto Serif JP', serif;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.25em;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: background-position 0.5s, box-shadow 0.3s;
+  box-shadow: 0 4px 20px rgba(139,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.05);
+  margin-top: 8px;
+}
+
+.btn-divine::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, transparent 40%, rgba(201,168,76,0.08) 50%, transparent 60%);
+  transform: translateX(-100%);
+  transition: transform 0.6s;
+}
+
+.btn-divine:hover {
+  background-position: 100% 0;
+  box-shadow: 0 6px 30px rgba(139,0,0,0.6), 0 0 20px rgba(201,168,76,0.15);
+}
+
+.btn-divine:hover::before {
+  transform: translateX(100%);
+}
+
+.btn-divine:active {
+  transform: scale(0.98);
+}
+
+/* ── 結果エリア ── */
+#result {
+  display: none;
+  margin-top: 28px;
+  animation: fadeIn 0.8s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.result-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.result-header .oracle-icon {
+  font-size: 48px;
+  filter: drop-shadow(0 0 15px rgba(201,168,76,0.8));
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { filter: drop-shadow(0 0 15px rgba(201,168,76,0.8)); }
+  50% { filter: drop-shadow(0 0 30px rgba(201,168,76,1)) drop-shadow(0 0 60px rgba(201,168,76,0.4)); }
+}
+
+.result-header h2 {
+  font-size: 14px;
+  letter-spacing: 0.3em;
+  color: var(--gold);
+  margin-top: 8px;
+}
+
+.resultbox {
+  background: rgba(0,0,0,0.5);
+  border: 1px solid rgba(201,168,76,0.2);
+  border-left: 3px solid rgba(139,0,0,0.8);
+  padding: 24px 22px;
+  line-height: 2;
+  font-size: 14px;
+  color: #c8bda8;
+  position: relative;
+  border-radius: 2px;
+}
+
+.resultbox::before {
+  content: '龍';
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  font-size: 32px;
+  opacity: 0.06;
+  pointer-events: none;
+}
+
+/* ── CTAエリア ── */
+.cta-card {
+  background: linear-gradient(145deg, rgba(139,0,0,0.15), rgba(12,12,20,0.9));
+  border: 1px solid rgba(201,168,76,0.25);
+  border-top: 2px solid rgba(139,0,0,0.6);
+  padding: 28px 24px;
+  margin-top: 20px;
+  border-radius: 2px;
+  text-align: center;
+  position: relative;
+}
+
+.cta-card h3 {
+  font-size: 15px;
+  letter-spacing: 0.15em;
+  color: var(--gold-light);
+  margin-bottom: 16px;
+}
+
+.cta-list {
+  list-style: none;
+  margin-bottom: 22px;
+  text-align: left;
+}
+
+.cta-list li {
+  padding: 7px 0;
+  font-size: 13px;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid rgba(201,168,76,0.07);
+}
+
+.cta-list li::before {
+  content: '◈';
+  color: var(--crimson-bright);
+  font-size: 10px;
+  flex-shrink: 0;
+}
+
+.cta-btn {
+  display: inline-block;
+  padding: 15px 30px;
+  background: linear-gradient(135deg, var(--gold) 0%, #a07830 50%, var(--gold) 100%);
+  background-size: 200% 100%;
+  color: var(--ink);
+  text-decoration: none;
+  font-family: 'Noto Serif JP', serif;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  border-radius: 2px;
+  transition: background-position 0.5s, box-shadow 0.3s;
+  box-shadow: 0 4px 20px rgba(201,168,76,0.3);
+  border: 1px solid rgba(201,168,76,0.6);
+}
+
+.cta-btn:hover {
+  background-position: 100% 0;
+  box-shadow: 0 6px 30px rgba(201,168,76,0.5);
+}
+
+/* ── フッター装飾 ── */
+.footer-deco {
+  text-align: center;
+  margin-top: 40px;
+  color: rgba(201,168,76,0.2);
+  font-size: 24px;
+  letter-spacing: 0.5em;
+}
+
+/* ── ローディングオーバーレイ ── */
+.overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  z-index: 100;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.overlay.show { display: flex; }
+
+.loading-dragon {
+  font-size: 64px;
+  animation: spinDragon 1.5s linear infinite;
+  filter: drop-shadow(0 0 20px rgba(201,168,76,0.8));
+}
+
+@keyframes spinDragon {
+  0% { transform: rotate(-10deg) scale(1); }
+  25% { transform: rotate(10deg) scale(1.1); }
+  50% { transform: rotate(-5deg) scale(1); }
+  75% { transform: rotate(8deg) scale(1.05); }
+  100% { transform: rotate(-10deg) scale(1); }
+}
+
+.loading-text {
+  color: var(--gold);
+  font-size: 14px;
+  letter-spacing: 0.3em;
+  animation: blink 1.2s ease-in-out infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- 煙エフェクト -->
+<div class="smoke-wrap" id="smokeWrap"></div>
+
+<!-- ローディング -->
+<div class="overlay" id="overlay">
+  <div class="loading-dragon">🐉</div>
+  <div class="loading-text">龍神が運命の糸を読み解いています…</div>
+</div>
+
+<div class="container">
+
+  <!-- ヘッダー -->
+  <div class="header">
+    <div class="dragon-top">🐉</div>
+    <h1>RYUJIN ORACLE</h1>
+    <div class="ja-title">龍神恋愛運命鑑定</div>
+    <div class="gold-line"></div>
+    <div class="subtitle">龍神の眼が、二人の縁と運命の流れを映し出す</div>
+  </div>
+
+  <!-- フォームカード -->
+  <div class="card">
+    <div class="corner-bl"></div>
+    <div class="corner-br"></div>
+
+    <div class="field-group">
+      <label>あなたのお名前（ニックネーム可）</label>
+      <input id="name" type="text" placeholder="例：さくら">
+    </div>
+
+    <div class="field-group">
+      <label>あなたの生年月日</label>
+      <input id="date1" type="date">
+    </div>
+
+    <div class="divider">◆ お相手の情報 ◆</div>
+
+    <div class="field-group">
+      <label>お相手の生年月日</label>
+      <input id="date2" type="date">
+    </div>
+
+    <div class="field-group">
+      <label>現在の関係性</label>
+      <select id="relation">
+        <option value="">── 選択してください ──</option>
+        <option>片思い</option>
+        <option>恋人</option>
+        <option>元恋人</option>
+        <option>既婚</option>
+        <option>複雑な関係</option>
+      </select>
+    </div>
+
+    <button class="btn-divine" onclick="uranai()">🔮 龍神に鑑定を依頼する</button>
+  </div>
+
+  <!-- 結果エリア -->
+  <div id="result">
+
+    <div class="card" style="margin-top:0; padding-top:28px;">
+      <div class="corner-bl"></div>
+      <div class="corner-br"></div>
+
+      <div class="result-header">
+        <div class="oracle-icon">🔮</div>
+        <h2>龍神の御神託</h2>
+        <div class="gold-line"></div>
+      </div>
+
+      <div class="resultbox" id="uranaiText"></div>
+
+      <div class="cta-card">
+        <h3>〜 さらに深く知りたい方へ 〜</h3>
+        <ul class="cta-list">
+          <li>相手の本当の気持ち・あなたへの想い</li>
+          <li>連絡・アプローチが来る可能性と時期</li>
+          <li>復縁のタイミングと成就の流れ</li>
+          <li>結婚の縁・二人の未来</li>
+        </ul>
+        <a class="cta-btn" href="ここにココナラURL">🐉 ココナラで詳しく鑑定する</a>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer-deco">龍 ◆ 龍 ◆ 龍</div>
+
+</div>
+
+<script>
+
+/* 煙パーティクル生成 */
+const wrap = document.getElementById('smokeWrap');
+for (let i = 0; i < 12; i++) {
+  const s = document.createElement('span');
+  const size = 80 + Math.random() * 160;
+  s.style.cssText = `
+    left:${Math.random()*100}%;
+    width:${size}px;
+    height:${size}px;
+    animation-duration:${10 + Math.random()*12}s;
+    animation-delay:${Math.random()*10}s;
+  `;
+  wrap.appendChild(s);
+}
+
+/* 鑑定ロジック */
+function uranai() {
+  const overlay = document.getElementById('overlay');
+  overlay.classList.add('show');
+
+  setTimeout(() => {
+    overlay.classList.remove('show');
+
+    const texts = [
+      "あなたとお相手の間には不思議と惹かれ合う縁が存在しています。出会ったタイミングや関係を見ると、お互いに影響を与え合う特別な相性です。ただし現在は少し気持ちのすれ違いが起こりやすい時期に入っています。相手の言動に不安を感じることもあるかもしれませんが、この流れは長く続くものではありません。今後数ヶ月の間に関係性が変化する兆しがあります。焦らず相手の気持ちを理解しようとする姿勢が、二人の未来を良い方向へ導くでしょう。",
+      "あなたとお相手のご縁は決して弱いものではありません。むしろ出会うべくして出会った可能性が高い関係です。ただ現在は恋愛運の流れが少し停滞しやすい時期に入っているようです。そのため相手の気持ちが分かりにくく感じたり、不安になることもあるかもしれません。しかし運気の流れを見ると、この状況は徐々に変わっていく兆しがあります。大切なのは焦って行動するのではなく、タイミングを見ながら関係を育てていくことです。",
+      "お二人の相性を見ると、お互いに強く意識しやすい関係である可能性が高いです。ただその分、気持ちのすれ違いや誤解も起こりやすい傾向があります。現在は少し距離を感じる時期かもしれませんが、これは関係が終わるという意味ではありません。むしろこの期間をどう過ごすかで未来が大きく変わる可能性があります。あなたの優しさや思いやりが、二人の関係を良い方向へ導いていくでしょう。"
+    ];
+
+    const random = texts[Math.floor(Math.random() * texts.length)];
+    document.getElementById('uranaiText').innerText = random;
+    document.getElementById('result').style.display = 'block';
+
+    setTimeout(() => {
+      window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    }, 100);
+  }, 2200);
+}
+
+</script>
+
+</body>
+</html>
